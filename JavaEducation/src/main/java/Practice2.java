@@ -5,7 +5,7 @@ public class Practice2 {
 
         public static void main(String args[]) {
 
-            int  size, array[], first, last;
+            int  size, array[];
 
             Scanner scan = new Scanner(System.in);
             System.out.println("Enter array length: ");
@@ -13,15 +13,13 @@ public class Practice2 {
 
             array = new int[size];
             for (int i = 0; i < size; i++) {
-                array[i] = 0 + (int)(Math.random() * 100);
+                array[i] = 0 + (int)(Math.random() * 10000000);
 
             }
             System.out.print ("Array elements:");
             for (int i = 0; i < size; i++) {
                 System.out.print (" " + array[i]);
             }
-            // сортируем элементы массива, так как для бинарного поиска
-            Arrays.sort(array);
 
             System.out.println();
             int number; //число для поиска
@@ -35,70 +33,84 @@ public class Practice2 {
             } while (number <= 0);
             System.out.println("Thank you! Your number: " + number);
 
-            first = 0;
-            last = size - 1;
-
-            binarySearch(array, first, last, number);
-
-            if (linearSearch(array, number)== -1){
-                System.out.println("linearSearch = False");
+            int first = 0;
+            int last = size - 1;
+            if (binarySearch(array, first,last, number)== -1){
+                System.out.println("binarySearch = False");
 
             }
             else {
-                System.out.println("linearSearch = True");
+                System.out.println("binarySearch = True");
             }
-
+            //binarySearch(array, first,last, number);
+            linearSearch(array, size, number);
         }
 
         //линейный поиск
-        public static int linearSearch(int[] array, int number) {
-            int flag = -1;
+        public static void linearSearch(int[] array,int size, int number) {
             long start = System.nanoTime();
-            for (int index = 0; index < array.length; index++) {
-            if (array[index] == number)
-                flag = 1;
+            int index;
+            for (index = 0; index < size; index++){
+                if (array[index] == number) {
+                    System.out.println("linearSearch = True find "+ number + " in position " + (index + 1));
+                    break;
+                }
+            }
+            if (index == size) {
+                System.out.println("linearSearch = False");
             }
             long finish = System.nanoTime();
             long timeConsumedMillis = finish - start;
-            System.out.println("Time of work Linear:"+ timeConsumedMillis + "ns");
-                return flag;
+            System.out.println("Time of work linear:"+ timeConsumedMillis + "ns");
         }
 
 
-
         // бинарный поиск
-        public static void binarySearch(int[] array, int first, int last, int number) {
-            int position;
-            int comparisonCount = 1;    // для подсчета количества сравнений
+        public static int binarySearch(int[] array,int first,int last,  int number) {
+
+            Arrays.sort(array);
 
             long start = System.nanoTime();
 
-
-            // для начала найдем индекс среднего элемента массива
-            position = (first + last) / 2;
-
-            while ((array[position] != number) && (first <= last)) {
-                comparisonCount++;
-                if (array[position] > number) {  // если число заданного для поиска
-                    last = position - 1; // уменьшаем позицию на 1.
-                } else {
-                    first = position + 1;    // иначе увеличиваем на 1
-                }
-                position = (first + last) / 2;
-            }
-            if (first <= last) {
-                System.out.println("binarySearch = True");
-                System.out.println("Binary search method found number after  " + comparisonCount +
-                        " comparisons");
-            } else {
-                System.out.println("binarySearch = False. Binary method finished work after "
-                        + comparisonCount + " comparisons");
+            // условие прекращения
+            if (last >= first) {
+                int mid = first + (last - first) / 2;
+                if (array[mid] == number)
+                    return mid;
+                // если средний элемент больше числа
+                if (array[mid] > number)
+                    return binarySearch(array, first, mid - 1, number);
+                // вызываем метод рекурсивно по меньшим данным
+                long finish = System.nanoTime();
+                long timeConsumedMillis = finish - start;
+                System.out.println("Time of work:"+ timeConsumedMillis + "ns");
+                
+                return binarySearch(array, mid + 1, last, number);
             }
             long finish = System.nanoTime();
             long timeConsumedMillis = finish - start;
             System.out.println("Time of work:"+ timeConsumedMillis + "ns");
-
+            return -1;
         }
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -20,21 +20,16 @@ public class Practice1 {
         } while (a <= 0 || b<=0 || c<0 || d<0);
                 System.out.println("You entered: " + a + ";" + b + ";" + c + ";" + d + ";");
 
-        Сomparison4(a,b,c,d);
+        System.out.println("The smallest number:"+ Сomparison4(a,b,c,d));
     }
         public static int Comparison2(int a, int b) {
-            int answer = Math.min(a, b);
-            return answer;
+            return Math.min(a, b);
         }
         public static int Comparison3(int a, int b,int c) {
-            int answer = Comparison2(a,b);
-            int answer2 = Math.min(answer, c);
-            return answer2;
+            return Math.min(Comparison2(a,b), c);
         }
-        public static void Сomparison4(int a, int b, int c, int d) {
-            int answer2 = Comparison3(a, b, c);
-            int answer3 = Math.min(answer2, d);
-            System.out.println("The smallest number:"+ answer3);
+        public static int Сomparison4(int a, int b, int c, int d) {
+           return Math.min(Comparison3 (a,b, c), d);
         }
     }
 

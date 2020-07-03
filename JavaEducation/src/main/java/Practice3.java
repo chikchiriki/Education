@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Practice3 {
     public static void main(String args[]) {
 
-        int size, array[], first, last;
+        int size, array[];
 
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter array length: ");
